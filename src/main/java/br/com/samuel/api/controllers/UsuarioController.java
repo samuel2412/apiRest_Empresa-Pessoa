@@ -63,6 +63,7 @@ public class UsuarioController {
 		Optional<Usuario> optional = usuarioRepository.findById(id);
 		if (optional.isPresent()) {
 			Usuario usuario = form.atualizar(id, usuarioRepository);
+			usuario.criptrografaSenha();
 			return ResponseEntity.ok(usuario);
 		}
 		return ResponseEntity.notFound().build();	
@@ -84,6 +85,8 @@ public class UsuarioController {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<Usuario> cadastrar(@RequestBody @Valid Usuario usuario, UriComponentsBuilder uriBuilder) {
+		usuario.criptrografaSenha();
+		
 		usuarioRepository.save(usuario);
 
 		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(usuario.getId()).toUri();

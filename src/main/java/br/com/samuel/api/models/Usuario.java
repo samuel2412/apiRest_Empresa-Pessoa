@@ -1,6 +1,7 @@
 package br.com.samuel.api.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,11 +14,19 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import br.com.samuel.api.repositorys.UsuarioRepository;
 
 @Entity
-public class Usuario{
+public class Usuario implements UserDetails{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull @NotEmpty
@@ -98,13 +107,58 @@ public class Usuario{
 	
 	}
 	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		return this.perfis;
+	}
 
+	@Override
+	public String getPassword() {
+		
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		
+		return this.nome;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		
+		return true;
+	}	
+	
+	public void criptrografaSenha() {
+		this.senha = new BCryptPasswordEncoder().encode(this.senha);
+	}
+	
 	@Override
 	public String toString() {
 		return "Usuario [email=" + email + ", senha=" + senha + ", nome=" + nome + ", perfis=" + perfis + "]";
 	}
 
-
+	
 	
 
 }

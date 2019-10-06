@@ -1,12 +1,12 @@
-package br.com.samuel.api.controllers;
+package br.com.samuel.api.controllers.dto;
 
-public class ErroDeFormulario {
+public class ErroDeFormularioDto {
 
 	private String campo;
 	private String erro;
 	
 	
-	public ErroDeFormulario(String campo, String erro) {
+	public ErroDeFormularioDto(String campo, String erro) {
 		super();
 		this.campo = campo;
 		this.erro = erro;

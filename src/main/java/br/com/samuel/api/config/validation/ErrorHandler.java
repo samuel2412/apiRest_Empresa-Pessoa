@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import br.com.samuel.api.controllers.ErroDeFormulario;
+import br.com.samuel.api.controllers.dto.ErroDeFormularioDto;
 
 
 @RestControllerAdvice
@@ -24,13 +24,13 @@ public class ErrorHandler {
 	
 	@ResponseStatus(code=HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public List<ErroDeFormulario> handler(MethodArgumentNotValidException exception){
-		List<ErroDeFormulario> dto = new ArrayList<ErroDeFormulario>();
+	public List<ErroDeFormularioDto> handler(MethodArgumentNotValidException exception){
+		List<ErroDeFormularioDto> dto = new ArrayList<ErroDeFormularioDto>();
 		
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		fieldErrors.forEach(e ->{
 			String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-			ErroDeFormulario erro = new ErroDeFormulario(e.getField(),mensagem);
+			ErroDeFormularioDto erro = new ErroDeFormularioDto(e.getField(),mensagem);
 			dto.add(erro);
 		});
 		return dto;

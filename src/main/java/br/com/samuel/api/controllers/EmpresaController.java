@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -34,6 +36,7 @@ public class EmpresaController {
 	EmpresaRepository empresaRepository;
 	
 	@GetMapping
+	@Cacheable("listaEmpresas")
 	public Page<Empresa> empresas(@RequestParam(required = false) String nomeEmpresa,
 			@PageableDefault(sort="id", direction = Direction.ASC, page=0,size=10) Pageable paginacao) {
 			
@@ -59,6 +62,7 @@ public class EmpresaController {
 	
 	@PutMapping("/{id}")
 	@Transactional
+	@CacheEvict(value="listaEmpresas", allEntries = true)
 	public ResponseEntity<Empresa> atualizar(@PathVariable Long id, @RequestBody @Valid Empresa form) {
 		Optional<Empresa> optional = empresaRepository.findById(id);
 		if (optional.isPresent()) {
@@ -71,6 +75,7 @@ public class EmpresaController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value="listaEmpresas", allEntries = true)
 	public ResponseEntity<Empresa> excluir(@PathVariable Long id) {
 		Optional<Empresa> optional = empresaRepository.findById(id);
 		if (optional.isPresent()) {
@@ -83,6 +88,7 @@ public class EmpresaController {
 	
 	@PostMapping
 	@Transactional
+	@CacheEvict(value="listaEmpresas", allEntries = true)
 	public ResponseEntity<Empresa> cadastrar(@RequestBody @Valid Empresa empresa, UriComponentsBuilder uriBuilder) {
 
 		empresaRepository.save(empresa);
