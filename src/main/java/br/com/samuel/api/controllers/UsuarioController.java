@@ -1,6 +1,7 @@
 package br.com.samuel.api.controllers;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,8 +94,19 @@ public class UsuarioController {
 		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(usuario.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(usuario);
-
 	}
+	
+	@PostMapping("/data")
+	@Transactional
+	public ResponseEntity<Usuario> cadastrarVarios(@RequestBody List<Usuario> usuarios, ModelMap map) {
+	    for(Usuario s : usuarios) {
+	    	s.criptrografaSenha();
+			usuarioRepository.save(s);
+	    }
+	    return ResponseEntity.ok().build();
+	   
+	}
+	
 
 	
 }
