@@ -59,18 +59,18 @@ public class UsuarioController {
 
 	}
 	
-	@PutMapping("/{id}")
-	@Transactional
-	public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody @Valid Usuario form) {
-		Optional<Usuario> optional = usuarioRepository.findById(id);
-		if (optional.isPresent()) {
-			Usuario usuario = form.atualizar(id, usuarioRepository);
-			usuario.criptrografaSenha();
-			return ResponseEntity.ok(usuario);
-		}
-		return ResponseEntity.notFound().build();	
-		
-	}
+//	@PutMapping("/{id}")
+//	@Transactional
+//	public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody @Valid Usuario form) {
+//		Optional<Usuario> optional = usuarioRepository.findById(id);
+//		if (optional.isPresent()) {
+//			Usuario usuario = form.atualizar(id, usuarioRepository);
+//			usuario.criptrografaSenha();
+//			return ResponseEntity.ok(usuario);
+//		}
+//		return ResponseEntity.notFound().build();	
+//		
+//	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional

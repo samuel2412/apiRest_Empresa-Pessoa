@@ -1,5 +1,7 @@
 package br.com.samuel.api.models;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +24,9 @@ public class Empresa {
 	private String email;
 	@NotNull @NotEmpty
 	private String areaOperacao;
+	@NotNull @NotEmpty
+	private BigDecimal valor_acao;
+	
 	
 	
 	public Long getId() {
@@ -54,6 +59,18 @@ public class Empresa {
 	public void setAreaOperacao(String areaOperacao) {
 		this.areaOperacao = areaOperacao;
 	}
+	
+	
+	
+	
+	public BigDecimal getValor_acao() {
+		return valor_acao;
+	}
+	public void setValor_acao(BigDecimal valor_acao) {
+		this.valor_acao = valor_acao;
+	}
+	
+	
 	
 	
 	public Empresa atualizar(Long id, EmpresaRepository empresaReposity) {

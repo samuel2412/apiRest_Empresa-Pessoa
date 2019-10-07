@@ -38,6 +38,13 @@ public class Usuario implements UserDetails{
 	
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Perfil> perfis = new ArrayList<Perfil>();
+	
+	 
+	 
+	
+	
+	
+	
 
 	@Override
 	public int hashCode() {
@@ -97,6 +104,15 @@ public class Usuario implements UserDetails{
 	}
 
 	
+	
+	public List<Perfil> getPerfis() {
+		return perfis;
+	}
+
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfis = perfis;
+	}
+
 	public Usuario atualizar(Long id, UsuarioRepository usuarioReposity) {
 		Usuario usuario = usuarioReposity.getOne(id);
 		usuario.setNome(this.nome);
