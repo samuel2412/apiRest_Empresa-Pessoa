@@ -8,9 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import br.com.samuel.api.repositorys.AcaoRepository;
 
@@ -34,7 +31,14 @@ public class Acao {
 	
 	private LocalDateTime dataCriacao = LocalDateTime.now();
 	
+	public Acao() {};
 	
+
+	public Acao(int quantidade, Empresa empresa, Usuario usuario) {
+		this.quantidade = quantidade;
+		this.empresa = empresa;
+		this.dono = usuario;
+	}
 
 	@Override
 	public int hashCode() {
@@ -111,6 +115,14 @@ public class Acao {
 			
 			return acao;		
 	}
+
+	@Override
+	public String toString() {
+		return "Acao [id=" + id + ", quantidade=" + quantidade + ", empresa=" + empresa + ", dono=" + dono
+				+ ", dataCriacao=" + dataCriacao + "]";
+	}
+	
+	
 
 	
 }
